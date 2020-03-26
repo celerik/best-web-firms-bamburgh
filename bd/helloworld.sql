@@ -1,8 +1,8 @@
-CREATE TABLE hello_world (
+CREATE TABLE dashboard (
    id serial PRIMARY KEY,
-   name VARCHAR (255) NOT NULL
+   content VARCHAR NOT NULL
 );
  
-INSERT INTO hello_world (name)
+INSERT INTO dashboard (content)
 VALUES
  ('Hello World!!')
