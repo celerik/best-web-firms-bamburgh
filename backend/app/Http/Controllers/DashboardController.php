@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// Models
+use App\Models\Dashboard;
+
 class DashboardController extends Controller
 {
     /**
@@ -13,7 +16,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return "Hello World";
+        return Dashboard::first();
     }
 
     /**
