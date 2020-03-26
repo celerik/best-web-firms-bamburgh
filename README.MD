@@ -20,4 +20,6 @@ Then you have the following infrastructure:
 | http://localhost:45432  | Posgres DB instance    | postgres             | postgres| postgres | postgres
 | http://localhost:55432  | PGAdmin4               | pgadmin4@celerik.com | admin   |          |
 
-To connect from PGAdmin to Postgres DB instance:
+To connect from PGAdmin to Postgres DB instance follow the instructions on this gif
+
+<img src="/images/connect_pg_admin.gif" />
