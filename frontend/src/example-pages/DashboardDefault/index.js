@@ -1,23 +1,47 @@
-import React, { Fragment } from 'react';
+// @packages
+import React, { PureComponent } from 'react';
+import { getDashboardContent } from '../../actions/dashboard';
 
-import { PageTitle } from '../../layout-components';
+// @scripts
+import DashboardDefault from './dashboard';
 
-import DashboardDefaultSection1 from '../../example-components/DashboardDefault/DashboardDefaultSection1';
-import DashboardDefaultSection2 from '../../example-components/DashboardDefault/DashboardDefaultSection2';
-import DashboardDefaultSection3 from '../../example-components/DashboardDefault/DashboardDefaultSection3';
-import DashboardDefaultSection4 from '../../example-components/DashboardDefault/DashboardDefaultSection4';
-export default function DashboardDefault() {
-  return (
-    <Fragment>
-      <PageTitle
-        titleHeading="Default"
-        titleDescription="This is a dashboard page example built using this template."
+class DashboardDefaultContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: '',
+      isFetching: false
+    };
+    this.getData = this.getData.bind(this);
+  }
+
+  getData() {
+    this.setState({ isFetching: true });
+    getDashboardContent()
+      .then(content => {
+        this.setState({
+          content,
+          isFetching: false
+        });
+      })
+      .catch(error => {
+        this.setState({
+          content: error.toString(),
+          isFetching: false
+        });
+      });
+  }
+
+  render() {
+    const { content, isFetching } = this.state;
+    return (
+      <DashboardDefault
+        content={content}
+        isFetching={isFetching}
+        onGetData={this.getData}
       />
-
-      <DashboardDefaultSection1 />
-      <DashboardDefaultSection2 />
-      <DashboardDefaultSection3 />
-      <DashboardDefaultSection4 />
-    </Fragment>
-  );
+    );
+  }
 }
+
+export default DashboardDefaultContainer;
