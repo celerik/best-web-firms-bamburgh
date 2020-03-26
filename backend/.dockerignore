@@ -1,0 +1,11 @@
+vendor/**
+
+**/*node_modules
+
+**.git
+.idea
+**.gitignore
+**.gitattributes
+**.sass-cache
+
+Dockerfile
