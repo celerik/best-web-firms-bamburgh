@@ -1,82 +1,31 @@
-FROM php:7.3-alpine
 
-# Install dev dependencies
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    curl-dev \
-    imagemagick-dev \
-    libtool \
-    libxml2-dev \
-    postgresql-dev \
-    sqlite-dev
+FROM composer AS builder
 
-# Install production dependencies
-RUN apk add --no-cache \
-    bash \
-    curl \
-    freetype-dev \
-    g++ \
-    gcc \
-    imagemagick \
-    libc-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
-    libzip-dev \
-    make \
-    openssh-client \
-    postgresql-libs \
-    rsync \
-    zlib-dev
+FROM php:7.3-apache
 
-# Install PECL and PEAR extensions
-RUN pecl install \
-    imagick \
-    xdebug
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# Enable PECL and PEAR extensions
-RUN docker-php-ext-enable \
-    imagick \
-    xdebug
-
-# Configure php extensions
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-configure zip --with-libzip
+RUN apt-get update && apt-get install -y \
+    zip \
+    unzip \
+    libpq-dev \
+&& rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
 RUN docker-php-ext-install \
-    bcmath \
-    calendar \
-    curl \
-    exif \
-    gd \
-    iconv \
-    mbstring \
     pdo \
-    pdo_mysql \
     pdo_pgsql \
-    pdo_sqlite \
-    pcntl \
-    tokenizer \
-    xml \
-    zip
+    pgsql
 
-# Install composer
-ENV COMPOSER_HOME /composer
-ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
-ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-
-# Cleanup dev dependencies
-RUN apk del -f .build-deps
-
-# Setup working directory
+# Prepare workdir
 WORKDIR /var/www
 COPY . /var/www
+RUN chmod -R 777 /var/www/storage
 
 # Install Laravel dependencies
 RUN composer install
 
+RUN php artisan key:generate
+
 # Run the Laravel artisan serve
 CMD php artisan serve --host=0.0.0.0 --port=8181
-
-EXPOSE 8181
