@@ -32,7 +32,7 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-  
+
   pgadmin:
     container_name: pgadmin_best_web_firms
     image: dpage/pgadmin4
@@ -54,4 +54,3 @@ networks:
 volumes:
     postgres:
     pgadmin:
-    
