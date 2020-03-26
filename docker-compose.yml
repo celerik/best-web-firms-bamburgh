@@ -1,20 +1,19 @@
 version: '3.5'
 
 services:
-  ## Please uncomment this when you finish the Dockerfiles for laravel and react
-  # best-web-firms-laravel:
-  #   container_name: laravel_best_web_firms
-  #   build: ./backend
-  #   image: celerik/best-web-firms-laravel:latest
-  #   networks:
-  #     - postgres
+  best-web-firms-laravel:
+    container_name: laravel_best_web_firms
+    build: ./backend
+    image: celerik/best-web-firms-laravel:latest
+    networks:
+      - postgres
 
-  # best-web-firms-bamburgh-react:
-  #   container_name: react_best_web_firms_bamburgh
-  #   build: ./frontend
-  #   image: celerik/best-web-firms-bamburgh-react:latest
-  #   networks:
-  #     - postgres
+  best-web-firms-bamburgh-react:
+    container_name: react_best_web_firms_bamburgh
+    build: ./frontend
+    image: celerik/best-web-firms-bamburgh-react:latest
+    networks:
+      - postgres
 
   postgres:
     container_name: postgres_best_web_firms
