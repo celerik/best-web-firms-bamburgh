@@ -24,6 +24,13 @@ const LandingPage = () => {
                 <Col lg="10" className="px-0 mx-auto d-flex align-items-center">
                   <div className="text-center">
                     <div className="px-4 px-sm-0 text-white mt-4">
+                      <div align="center">
+                        <img
+                          src="https://www.bestwebfirms.com/img/badges/best-web-firms.png"
+                          alt="Bet Web Firms"
+                          width="112"
+                        />
+                      </div>
                       <h1 className="display-2 mb-5 font-weight-bold">
                         BEST.WEB.FIRMS
                       </h1>
@@ -34,11 +41,6 @@ const LandingPage = () => {
                         ranked by experts with decades of experience in each
                         individual industry.
                       </p>
-                      <p className="text-white font-size-lg">
-                        Check out the live preview to see all the available
-                        components in action!
-                      </p>
-                      <div className="divider border-2 border-light my-5 border-light opacity-2 mx-auto rounded-circle w-50" />
                       <div>
                         <Button
                           tag={Link}
@@ -47,16 +49,12 @@ const LandingPage = () => {
                           color="success"
                           className="d-block d-sm-inline-block"
                           title="View Bamburgh React Admin Dashboard with Reactstrap Free Live Preview">
-                          <span className="btn-wrapper--label">Live Demo</span>
+                          <span className="btn-wrapper--label">Go to App</span>
                           <span className="btn-wrapper--icon">
                             <FontAwesomeIcon icon={['fas', 'arrow-right']} />
                           </span>
                         </Button>
                       </div>
-                      <small className="d-block pt-4">
-                        For a comprehensive list of components &amp; commercial
-                        licenses, we recommend the PRO version.
-                      </small>
                     </div>
                   </div>
                 </Col>
