@@ -17,17 +17,12 @@ RUN apk add --no-cache \
     freetype-dev \
     g++ \
     gcc \
-    git \
     imagemagick \
     libc-dev \
     libjpeg-turbo-dev \
     libpng-dev \
     libzip-dev \
     make \
-    mysql-client \
-    nodejs \
-    nodejs-npm \
-    yarn \
     openssh-client \
     postgresql-libs \
     rsync \
@@ -78,8 +73,10 @@ RUN apk del -f .build-deps
 WORKDIR /var/www
 COPY . /var/www
 
+# Install Laravel dependencies
 RUN composer install
 
+# Run the Laravel artisan serve
 CMD php artisan serve --host=0.0.0.0 --port=8181
 
 EXPOSE 8181
