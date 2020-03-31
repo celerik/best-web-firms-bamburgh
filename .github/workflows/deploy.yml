@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Azure docker login
-      run: docker login {{ secrets.CONTAINER_REGISTRY_URL }} -u {{ secrets.CONTAINER_REGISTRY_USR }} -p ${{ secrets.CONTAINER_REGISTRY_PWD }}
+      run: docker login ${{ secrets.CONTAINER_REGISTRY_URL }} -u ${{ secrets.CONTAINER_REGISTRY_USR }} -p ${{ secrets.CONTAINER_REGISTRY_PWD }}
       
     - name: Build frontend image
       working-directory: ./frontend
