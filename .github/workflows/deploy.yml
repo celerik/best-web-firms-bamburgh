@@ -15,12 +15,20 @@ jobs:
       
     - name: Build frontend image
       working-directory: ./frontend
-      run: docker build -t celerik.azurecr.io/celerik/best-web-firms-bamburgh/bestwebfirmsdev:latest . -f Dockerfile
+      run: docker build -t celerik.azurecr.io/celerik/best-web-firms-bamburgh-react:latest . -f Dockerfile
       
     - name: Publish frontend image
       working-directory: ./frontend
-      run: docker push celerik.azurecr.io/celerik/best-web-firms-bamburgh/bestwebfirmsdev:latest
+      run: docker push celerik.azurecr.io/celerik/celerik/best-web-firms-bamburgh-react:latest
       
+    - name: Build backend image
+      working-directory: ./frontend
+      run: docker build -t celerik.azurecr.io/celerik/best-web-firms-laravel:latest . -f Dockerfile
+      
+    - name: Publish backend image
+      working-directory: ./frontend
+      run: docker push celerik.azurecr.io/celerik/best-web-firms-laravel:latest
+
     - name: Call webhook
       uses: joelwmale/webhook-action@master
       env:
