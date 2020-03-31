@@ -1,0 +1,40 @@
+name: deploy
+
+on:
+    push:
+      branches:
+        - master
+
+jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Azure docker login
+      run: docker login ${{ secrets.CONTAINER_REGISTRY_URL }} -u ${{ secrets.CONTAINER_REGISTRY_USR }} -p ${{ secrets.CONTAINER_REGISTRY_PWD }}
+      
+    - name: Build frontend image
+      working-directory: ./frontend
+      run: docker build -t celerik.azurecr.io/celerik/best-web-firms-bamburgh-react:latest . -f Dockerfile
+      
+    - name: Publish frontend image
+      working-directory: ./frontend
+      run: docker push celerik.azurecr.io/celerik/best-web-firms-bamburgh-react:latest
+      
+    - name: Build backend image
+      working-directory: ./backend
+      run: docker build -t celerik.azurecr.io/celerik/best-web-firms-laravel:latest . -f Dockerfile
+      
+    - name: Publish backend image
+      working-directory: ./backend
+      run: docker push celerik.azurecr.io/celerik/best-web-firms-laravel:latest
+
+    - name: Call webhook
+      uses: joelwmale/webhook-action@master
+      env:
+        WEBHOOK_URL: ${{ secrets.AZURE_DEPLOY_WEBHOOK }}
+        data: "Deploying from github actions!"
+    
